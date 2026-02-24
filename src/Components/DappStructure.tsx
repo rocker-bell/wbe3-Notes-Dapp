@@ -1,5 +1,5 @@
 import "../Styles/DappLanding.css";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 const DappStructure = () => {
   return (
@@ -49,7 +49,7 @@ const DappStructure = () => {
               <circle cx="10" cy="10" r="2" fill="currentColor"/>
             </svg>
             <span>
-                <Link to="/CreacteAccount">
+                <Link to="/CreateAccount">
                         Create Account
                 </Link>
                 </span>
