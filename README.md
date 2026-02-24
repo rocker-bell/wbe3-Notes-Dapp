@@ -14,7 +14,7 @@ The application removes reliance on centralized authentication servers and gives
 
 ## Architecture
 
-```mermaid
+```
 graph TD
     A[Main Application] --> B[HashRouter]
     B --> C[App.tsx - Route Handler]
@@ -22,10 +22,10 @@ graph TD
     C --> E[CreateAccount.tsx - Account Creation]
     C --> F[ConnectWallet.tsx - Wallet Connection]
     D --> G[DappLanding.css - Styling]
-    E --> H[@hashgraph/sdk - Hedera SDK]
+    E --> H[Hedera SDK]
     F --> H
     H --> I[Hedera Network]
-    C --> J[react-toastify - Notifications]
+    C --> J[React Toastify - Notifications]
 ```
 
 ---
