@@ -101,6 +101,7 @@ const App = () => {
     <ConnectHederaAccount
       accountId={accountId}
       privateKey={privateKey}
+      evmAddress={evmAddress}
       setAccountId={setAccountId}
       setPrivateKey={setPrivateKey}
       setEvmAddress={setEvmAddress} // ✅ pass the setter

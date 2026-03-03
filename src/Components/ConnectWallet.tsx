@@ -2820,6 +2820,7 @@ import todoapp_icon from "../assets/todoapp_icon.png";
 interface ConnectWalletProps {
   accountId: string | null;
   privateKey: string | null;
+   evmAddress: string | null;
   setAccountId: React.Dispatch<React.SetStateAction<string | null>>;
   setPrivateKey: React.Dispatch<React.SetStateAction<string | null>>;
   setEvmAddress: React.Dispatch<React.SetStateAction<string | null>>; // ✅ add this
@@ -2828,20 +2829,15 @@ interface ConnectWalletProps {
 const ConnectHederaAccount: React.FC<ConnectWalletProps> = ({
   accountId,
   privateKey,
+  evmAddress,
   setAccountId,
   setPrivateKey,
+  setEvmAddress,
 }) => {
   const [balance, setBalance] = useState("");
   const [loading, setLoading] = useState(false);
-  const [evmAddress, setEvmAddress] = useState("");
-  // const [showModal, setShowModal] = useState(false);
-
-  // const [todoTitle, setTodoTitle] = useState("");
-  // const [todoDescription, setTodoDescription] = useState("");
-  // const [todoStatus, setTodoStatus] = useState<Status>("Active");
-  // const [todos, setTodos] = useState<
-  //   { title: string; description: string; status: Status }[]
-  // >([]);
+  // const [evmAddress, setEvmAddress] = useState("");
+ 
 const [hasConnected, setHasConnected] = useState(false);
   const navigate = useNavigate();
 
@@ -2879,7 +2875,7 @@ const [hasConnected, setHasConnected] = useState(false);
         return;
       }
 
-      const parsedAccountId = AccountId.fromString(accountId);
+      const parsedAccountId = AccountId.fromString(accountId.trim());
       const parsedPrivateKey = PrivateKey.fromStringECDSA(privateKey);
 
       const client =
@@ -2917,16 +2913,7 @@ const [hasConnected, setHasConnected] = useState(false);
     toast.error("Disconnected from account.");
   };
 
-  // -------------------- Polling for accountId changes --------------------
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     const savedId = localStorage.getItem("hedera_account_id");
-  //     if (savedId && savedId !== accountId) setAccountId(savedId);
-  //     else if (!savedId && accountId) disconnect();
-  //   }, 3000);
-
-  //   return () => clearInterval(intervalId);
-  // }, [accountId]);
+  
   useEffect(() => {
   const intervalId = setInterval(() => {
     const savedId = localStorage.getItem("hedera_account_id");
@@ -2988,121 +2975,7 @@ const [hasConnected, setHasConnected] = useState(false);
   const maskEvmAddress = (address: string) =>
     !address ? "" : `${address.slice(0, 6)}...${address.slice(-4)}`;
 
-  // -------------------- Fetch Todos --------------------
-  // const fetchTodos = async (clientOverride?: Client) => {
-  //   if (!accountId || !privateKey) return;
 
-  //   const client =
-  //     clientOverride ??
-  //     (import.meta.env.VITE_NETWORK === "mainnet"
-  //       ? Client.forMainnet()
-  //       : Client.forTestnet());
-
-  //   const parsedAccountId = AccountId.fromString(accountId);
-  //   const parsedPrivateKey = PrivateKey.fromStringECDSA(privateKey);
-  //   client.setOperator(parsedAccountId, parsedPrivateKey);
-
-  //   try {
-  //     const totalTodosTx = await new ContractCallQuery()
-  //       .setContractId(CONTRACT_ID)
-  //       .setGas(100000)
-  //       .setFunction("getTotalTodos")
-  //       .execute(client);
-
-  //     const totalTodos = Number(totalTodosTx.getUint256(0));
-  //     const allTodos: { title: string; description: string; status: Status }[] =
-  //       [];
-
-  //     for (let i = 1; i <= totalTodos; i++) {
-  //       const todoRes = await new ContractCallQuery()
-  //         .setContractId(CONTRACT_ID)
-  //         .setGas(200000)
-  //         .setFunction(
-  //           "getTodo",
-  //           new ContractFunctionParameters().addUint256(i)
-  //         )
-  //         .execute(client);
-
-  //       const title = todoRes.getString(0);
-  //       const description = todoRes.getString(1);
-  //       const statusIndex = Number(todoRes.getUint256(3));
-  //       const status: Status =
-  //         statusIndex === 0
-  //           ? "Active"
-  //           : statusIndex === 1
-  //           ? "Completed"
-  //           : "Expired";
-
-  //       allTodos.push({ title, description, status });
-  //     }
-
-  //     setTodos(allTodos);
-  //   } catch (err) {
-  //     console.error("Error fetching todos:", err);
-  //   }
-  // };
-
-  // -------------------- Add Todo --------------------
-  // const AddTodo = async () => {
-  //   if (!todoTitle) {
-  //     toast.error("Title is required");
-  //     return;
-  //   }
-
-  //   try {
-  //     if (!accountId || !privateKey) {
-  //       toast.error("Wallet not connected");
-  //       return;
-  //     }
-
-  //     const parsedAccountId = AccountId.fromString(accountId);
-  //     const parsedPrivateKey = PrivateKey.fromStringECDSA(privateKey);
-
-  //     const client =
-  //       import.meta.env.VITE_NETWORK === "mainnet"
-  //         ? Client.forMainnet()
-  //         : Client.forTestnet();
-
-  //     client.setOperator(parsedAccountId, parsedPrivateKey);
-
-  //     const dueDate = Math.floor(Date.now() / 1000) + 24 * 60 * 60;
-
-  //     const tx = await new ContractExecuteTransaction()
-  //       .setContractId(CONTRACT_ID)
-  //       .setGas(500000)
-  //       .setFunction(
-  //         "addTodo",
-  //         new ContractFunctionParameters()
-  //           .addString(todoTitle)
-  //           .addString(todoDescription)
-  //           .addUint256(dueDate)
-  //       )
-  //       .execute(client);
-
-  //     await tx.getReceipt(client);
-
-  //     toast.success("Todo added on Hedera Testnet!");
-
-  //     setTodos([
-  //       ...todos,
-  //       {
-  //         title: todoTitle,
-  //         description: todoDescription,
-  //         status: "Active",
-  //       },
-  //     ]);
-
-  //     setTodoTitle("");
-  //     setTodoDescription("");
-  //     setTodoStatus("Active");
-  //     setShowModal(false);
-
-  //     fetchTodos(client);
-  //   } catch (err) {
-  //     console.error(err);
-  //     toast.error("Failed to add Todo on Hedera");
-  //   }
-  // };
 
   const handleTodoLink = () => {
     navigate("/todoApp");
@@ -3118,7 +2991,7 @@ const [hasConnected, setHasConnected] = useState(false);
         type="text"
         placeholder="Account ID (0.0.x)"
         value={accountId ?? ""}
-        onChange={(e) => setAccountId(e.target.value)}
+        onChange={(e) => setAccountId(e.target.value.trim())}
         className="input"
       />
 
@@ -3126,14 +2999,14 @@ const [hasConnected, setHasConnected] = useState(false);
         type="text"
         placeholder="Private Key"
         value={privateKey ?? ""}
-        onChange={(e) => setPrivateKey(e.target.value)}
+        onChange={(e) => setPrivateKey(e.target.value.trim())}
         className="input"
       />
 
       <div className="button-group">
         <button
           onClick={connectAccount}
-          disabled={loading || !!accountId}
+          disabled={loading}
           className="btn"
         >
           {loading ? "Connecting..." : accountId ? "Connected" : "Connect"}
