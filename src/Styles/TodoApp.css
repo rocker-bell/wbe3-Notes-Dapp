@@ -170,3 +170,36 @@
 
 .active { background: #e0f2fe; color: #0369a1; }
 .completed { background: #dcfce7; color: #15803d; }
+
+
+/* Container for badge and date */
+.todo-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Space between badge and date */
+  margin-top: 6px;
+}
+
+/* The Status Badge */
+.status-badge {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+/* The Date Text */
+.due-date-display {
+  font-size: 0.8rem;
+  color: #757575; /* Subtle grey */
+  font-family: 'Inter', sans-serif;
+  border-left: 1px solid #ddd;
+  padding-left: 12px;
+}
+
+/* If the task is expired, strike through the text */
+.todo-card.expired .todo-text {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
