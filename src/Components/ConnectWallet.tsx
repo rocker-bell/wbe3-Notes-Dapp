@@ -2996,6 +2996,22 @@ const [hasConnected, setHasConnected] = useState(false);
   const handleHCAIhelperLink = () => {
     navigate("/HCAIhelper")
   }
+
+
+
+  type CopyField = "accountId" | "privateKey" | "evmAddress";
+
+const [copied, setCopied] = useState<CopyField | "">("");
+
+const copyToClipboard = async (text: string, field: CopyField) => {
+  await navigator.clipboard.writeText(text);
+  setCopied(field);
+
+  setTimeout(() => {
+    setCopied("");
+  }, 2000);
+};
+
   // -------------------- Render --------------------
   return (
     <div className="container">
@@ -3038,7 +3054,7 @@ const [hasConnected, setHasConnected] = useState(false);
         </button>
       </div>
 
-      {accountId && (
+      {/* {accountId && (
         <div className="info">
           <p>
             <strong>Account ID:</strong> {maskAccountId(accountId)}
@@ -3059,9 +3075,53 @@ const [hasConnected, setHasConnected] = useState(false);
         <p className="info">
           <strong>EVM Address:</strong> {maskEvmAddress(evmAddress)}
         </p>
+      )} */}
+
+      {accountId && (
+  <div className="info">
+    <div className="wallet-info-container">
+    <p className="container-paragraph">
+      <strong>Account ID:</strong> {maskAccountId(accountId)}
+      <button onClick={() => copyToClipboard(accountId ?? "", "accountId")}>
+        {copied === "accountId" ? "📋 Copied" : "📋"}
+      </button>
+    </p>
+    </div>
+        <div className="wallet-info-container">
+    <p className="container-paragraph">
+      <strong>Private Key:</strong> {maskPrivateKey(privateKey ?? "")}
+      <button onClick={() => copyToClipboard(privateKey ?? "", "privateKey")}>
+        {copied === "privateKey" ? "📋 Copied" : "📋"}
+      </button>
+    </p>
+    </div>
+  </div>
+)}
+
+      {balance && (
+        <p className="info">
+          <strong>Balance:</strong> {balance} HBAR
+        </p>
+      )}
+
+      {evmAddress && (
+        <p className="wallet-info-container info">
+          <strong>EVM Address:</strong> {maskEvmAddress(evmAddress)}
+          <button  onClick={() => copyToClipboard(evmAddress, "evmAddress")}>
+            
+            {copied === "evmAddress" ? "📋 Copied" : "📋"}
+          </button>
+        </p>
       )}
 
       <div className="apps-container">
+        <span className="more-apps">
+          <Link to="/Myapps" className="Myapps-link">
+          more <img width="25" height="25" src="https://img.icons8.com/office/40/forward--v1.png" alt="forward--v1"/>
+          </Link>
+        </span>
+        <div className="general-appbox">
+          
         <div className="app-box" onClick={handleTodoLink}>
           <img src={todoapp_icon} alt="" className="app-image" />
           <p className="app-title">todoApp</p>
@@ -3081,6 +3141,7 @@ const [hasConnected, setHasConnected] = useState(false);
          <div className="app-box" onClick={handleHCAIhelperLink}>
                 <img width="48" height="48" src="https://img.icons8.com/pulsar-color/48/bard.png" alt="bard"/>
             <p className="app-title">HCAIhelper</p>
+        </div>
         </div>
         
       </div>

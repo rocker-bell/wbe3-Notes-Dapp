@@ -245,6 +245,35 @@
 } */
 
 
+.HCAI_xpbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  
+}
+
+/* .image {
+  background-color: yellow;
+} */
+
+.info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.wallet-info-container, .container-paragraph {
+  border: 1px solid black;
+  min-width: 250px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+
 
 /* Animations */
 @keyframes fadeIn {

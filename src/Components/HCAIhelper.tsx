@@ -349,6 +349,7 @@ import { useState } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Link } from "react-router-dom";
 import "../Styles/HCAIHelper.css";
+import flash from "../assets/flash.png"
 
 type ChatMessage = {
   sender: "user" | "ai";
@@ -421,6 +422,9 @@ const HCAIhelper = ({ evmAddress, privateKey, accountId }: HCAIHelperProps) => {
       <div className="AI_chatbox_container">
         <div className="AI_chatbox_header">
           <span>AI Assistant</span>
+          <span className="HCAI_xpbar">xp
+            <img  className="image" src={flash} alt="" />
+          </span>
         </div>
 
         <div className="AI_chatbox_messages">

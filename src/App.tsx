@@ -87,7 +87,7 @@ import HCAIhelper from "./Components/HCAIhelper.tsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import HbarAccountManager from "./Components/HbarAccountManager.tsx";
-
+import Myapps from "./Components/Myapps.tsx"
 const App = () => {
   // shared wallet state
   const [accountId, setAccountId] = useState<string | null>(null);
@@ -99,6 +99,7 @@ const App = () => {
     <>
       <ToastContainer position="top-right" />
       <Routes>
+        <Route path="/Myapps" element={<Myapps/>}/>
         <Route path="/" element={<DappStructure />} />
         <Route path="/CreateAccount" element={<CreateHederaAccount />} />
         <Route
