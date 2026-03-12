@@ -417,7 +417,7 @@ const HCAIhelper = ({ evmAddress, privateKey, accountId }: HCAIHelperProps) => {
         />
       </Link>
 
-      <h2><strong>Your AI companion is here for you</strong>!</h2>
+      {/* <h2><strong>Your AI companion is here for you</strong>!</h2> */}
 
       <div className="AI_chatbox_container">
         <div className="AI_chatbox_header">
