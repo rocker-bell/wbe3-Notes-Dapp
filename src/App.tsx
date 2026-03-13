@@ -73,7 +73,13 @@
 
 // export default App;
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import {
+  loadAccounts,
+  saveAccounts,
+  loadActiveAccount,
+  saveActiveAccount
+} from "./utils/storage"
 
 import { Routes, Route } from "react-router-dom";
 import DappStructure from "./Components/DappStructure.tsx";
@@ -94,6 +100,31 @@ const App = () => {
   const [privateKey, setPrivateKey] = useState<string | null>(null);
   const [evmAddress, setEvmAddress] = useState<string | null>(null);
 
+  const [accounts, setAccounts] = useState<any[]>([])
+const [activeAccount, setActiveAccount] = useState<number | null>(null)
+
+
+useEffect(() => {
+  const initWallet = async () => {
+    const storedAccounts = await loadAccounts()
+    const activeIndex = await loadActiveAccount()
+
+    setAccounts(storedAccounts)
+    setActiveAccount(activeIndex)
+  }
+
+  initWallet()
+}, [])
+
+useEffect(() => {
+  saveAccounts(accounts)
+}, [accounts])
+
+useEffect(() => {
+  if (activeAccount !== null) {
+    saveActiveAccount(activeAccount)
+  }
+}, [activeAccount])
 
   return (
     <>
@@ -134,7 +165,21 @@ const App = () => {
           path="/chatbox"
           element={<Chatbox accountId={accountId} privateKey={privateKey} evmAddress={evmAddress} />}
         />
-        <Route path="/HCmanager" element={<HbarAccountManager />} />
+        {/* <Route path="/HCmanager" element={<HbarAccountManager />} />
+        
+        */}
+
+        <Route
+  path="/HCmanager"
+  element={
+    <HbarAccountManager
+      accounts={accounts}
+      setAccounts={setAccounts}
+      activeAccount={activeAccount}
+      setActiveAccount={setActiveAccount}
+    />
+  }
+/>
         <Route path="/HCAIhelper" element={<HCAIhelper 
               accountId={accountId}
               privateKey={privateKey}
