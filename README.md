@@ -191,23 +191,23 @@ Important: Never commit real private keys to version control.
 npm install
 ```
 
-### Run Development Server
+### Run Development Server for browser mode
 
 ```bash
 npm run dev
 ```
 
-### Build for Production
+### Build for Production browser mode
 
 ```bash
 npm run build
 ```
-
-### Preview Production Build
+### Build for Production extension mode
 
 ```bash
-npm run preview
+npm run build:ext
 ```
+
 
 ---
 
